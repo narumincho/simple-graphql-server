@@ -20,7 +20,7 @@ export const Url = new g.GraphQLScalarType<URL, string>({
     }
     try {
       return new URL(value);
-    } catch (error) {
+    } catch (_error) {
       throw new Error(value + " is not valid URL");
     }
   },
@@ -28,7 +28,7 @@ export const Url = new g.GraphQLScalarType<URL, string>({
     if (ast.kind === g.Kind.STRING) {
       try {
         return new URL(ast.value);
-      } catch (error) {
+      } catch (_error) {
         throw new Error(ast.value + " is not valid URL");
       }
     }

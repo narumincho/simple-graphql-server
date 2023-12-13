@@ -40,7 +40,11 @@ export const toDescriptionString = (
 ) => {
   return (
     "\n\n### simpleGraphQLClientGenAnnotation\n```json\n" +
-    JSON.stringify(simpleGraphQLAnnotation) +
+    JSON.stringify({
+      $schema:
+        "https://raw.githubusercontent.com/narumincho/simple_graphql_server_common/main/schema.json",
+      ...simpleGraphQLAnnotation,
+    }) +
     "\n```"
   );
 };
