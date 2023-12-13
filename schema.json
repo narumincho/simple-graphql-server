@@ -1,0 +1,79 @@
+{
+    "$schema": "http://json-schema.org/draft-04/schema",
+    "oneOf": [
+        {
+            "type": "object",
+            "required": [
+                "type",
+                "maxLength"
+            ],
+            "description": "一般的な文字列のバリデーションをする.\n\n- 前後の空白は取り除く\n- 空白の連続は1つの空白にまとめる\n- 改行は空白として変換する\n- 1文字以上\n- UTF16バイト数での文字数制限",
+            "properties": {
+                "type": {
+                    "enum": [
+                        "text"
+                    ]
+                },
+                "maxLength": {
+                    "type": "number"
+                }
+            }
+        },
+        {
+            "type": "object",
+            "required": [
+                "type"
+            ],
+            "description": "ファイルのハッシュ値である SHA256 や, AccountToken で使う\n\n内部的には `5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9` のような16進数の文字列の表現",
+            "properties": {
+                "type": {
+                    "enum": [
+                        "token"
+                    ]
+                }
+            }
+        },
+        {
+            "type": "object",
+            "required": [
+                "type"
+            ],
+            "description": "UUID. 16byteのバイナリ\n\n内部的には `445bf4f21ab920394c352dbdde962ea8` のような16進数のハイフン無し文字列表現",
+            "properties": {
+                "type": {
+                    "enum": [
+                        "uuid"
+                    ]
+                }
+            }
+        },
+        {
+            "type": "object",
+            "required": [
+                "type"
+            ],
+            "description": "時刻を表現する. UNIX 元期からの経過ミリ秒数",
+            "properties": {
+                "type": {
+                    "enum": [
+                        "dateTime"
+                    ]
+                }
+            }
+        },
+        {
+            "type": "object",
+            "required": [
+                "type"
+            ],
+            "description": "URL",
+            "properties": {
+                "type": {
+                    "enum": [
+                        "url"
+                    ]
+                }
+            }
+        }
+    ]
+}
