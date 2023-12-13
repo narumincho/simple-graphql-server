@@ -1,5 +1,5 @@
 import { build, emptyDir } from "https://deno.land/x/dnt@0.39.0/mod.ts";
-import { resolve } from "https://deno.land/std@0.182.0/path/mod.ts";
+import { resolve } from "https://deno.land/std@0.208.0/path/mod.ts";
 
 const npmOutDir = "./npm";
 
