@@ -1,0 +1,1 @@
+# simple_graphql_server_common
