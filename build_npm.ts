@@ -13,7 +13,7 @@ Promise.all([
       deno: true,
     },
     package: {
-      name: "simple-graphql-server-common",
+      name: "@narumincho/simple-graphql-server-common",
       version: "0.0.1",
       author: "narumincho",
       description:
