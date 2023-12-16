@@ -5,6 +5,8 @@ const npmOutDir = "./npm";
 
 await emptyDir(npmOutDir);
 
+const version = "0.0.2";
+
 Promise.all([
   build({
     entryPoints: ["./annotation.ts", "./dateTime.ts", "./url.ts"],
@@ -14,7 +16,7 @@ Promise.all([
     },
     package: {
       name: "@narumincho/simple-graphql-server-common",
-      version: "0.0.1",
+      version,
       author: "narumincho",
       description:
         "GraphQL server common library for simple_graphql_client_gen",
@@ -29,5 +31,11 @@ Promise.all([
     },
   }),
   Deno.copyFile("LICENSE", resolve(npmOutDir, "LICENSE")),
-  Deno.copyFile("README.md", resolve(npmOutDir, "README.md")),
+  Deno.writeTextFile(
+    resolve(npmOutDir, "README.md"),
+    `# simple_graphql_server_common@v${version}
+
+GraphQL server common library for https://github.com/narumincho/dart-packages/tree/main/packages/simple_graphql_client_gen
+`
+  ),
 ]);
