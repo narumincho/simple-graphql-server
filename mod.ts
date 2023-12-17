@@ -1,6 +1,4 @@
-import * as annotation from "./annotation.ts";
-import * as dateTime from "./dateTime.ts";
-import * as id from "./id.ts";
-import * as url from "./url.ts";
-
-export { annotation, dateTime, id, url };
+export * from "./annotation.ts";
+export * from "./dateTime.ts";
+export * from "./id.ts";
+export * from "./url.ts";

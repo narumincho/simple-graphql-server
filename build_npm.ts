@@ -5,7 +5,7 @@ const npmOutDir = "./npm";
 
 await emptyDir(npmOutDir);
 
-const version = "0.0.3";
+const version = "0.1.0";
 
 Promise.all([
   build({

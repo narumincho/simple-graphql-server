@@ -2,7 +2,7 @@ import * as g from "npm:graphql";
 import { toDescriptionString } from "./annotation.ts";
 
 const dateTimeTypeSerialize: g.GraphQLScalarSerializer<number> = (
-  value
+  value,
 ): number => {
   if (value instanceof Date) {
     return value.getTime();
@@ -11,7 +11,7 @@ const dateTimeTypeSerialize: g.GraphQLScalarSerializer<number> = (
 };
 
 const dateTimeTypeParseValue: g.GraphQLScalarValueParser<Date> = (
-  value
+  value,
 ): Date => {
   if (typeof value === "number") {
     return new Date(value);
@@ -40,4 +40,4 @@ const dateTimeTypeConfig: g.GraphQLScalarTypeConfig<Date, number> = {
   parseLiteral: dateTimeTypeParseLiteral,
 };
 
-export const dateTimeGraphQLType = new g.GraphQLScalarType(dateTimeTypeConfig);
+export const DateTime = new g.GraphQLScalarType(dateTimeTypeConfig);
