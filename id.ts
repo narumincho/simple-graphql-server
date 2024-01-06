@@ -1,35 +1,48 @@
 import * as g from "npm:graphql";
 import { toDescriptionString } from "./annotation.ts";
 
+export type BrandId<TypeName extends string> = string & {
+  readonly __uniqueSymbol: unique symbol;
+  readonly __typeName: TypeName;
+};
+
 /**
  * UUID 形式の ID の GraphQL の Scalar 型を作る
  */
-export const createIdGraphQLScalarType = <Id extends string>(
-  parseFn: (raw: unknown) => Id,
-  name: string
-) =>
-  new g.GraphQLScalarType<Id, string>({
+export const createIdGraphQLScalarType = <TypeName extends string>(
+  name: TypeName,
+): g.GraphQLScalarType<BrandId<TypeName>, string> =>
+  new g.GraphQLScalarType<BrandId<TypeName>, string>({
     name,
-    description:
-      "UUID のハイフン無し文字列 " + toDescriptionString({ type: "uuid" }),
+    description: "UUID のハイフン無し文字列 " +
+      toDescriptionString({ type: "uuid" }),
     serialize: (value) => {
       if (typeof value === "string") {
         return value;
       }
       throw new Error(
-        `${name} is not string in GraphQL Scalar ${name} serialize`
+        `${name} is not string in GraphQL Scalar ${name} serialize`,
       );
     },
-    parseValue: parseFn,
+    parseValue: parseId<BrandId<TypeName>>,
     parseLiteral: (ast) => {
       if (ast.kind === g.Kind.STRING) {
-        return parseFn(ast.value);
+        return parseId<BrandId<TypeName>>(ast.value);
       }
       throw new Error(
-        `${name} ast is not string in GraphQL Scalar ${name} parseLiteral`
+        `${name} ast is not string in GraphQL Scalar ${name} parseLiteral`,
       );
     },
   });
+
+const parseId = <const idType extends string>(value: unknown) => {
+  if (typeof value === "string" && /^[0-9a-f]{32}$/u.test(value)) {
+    return value as idType;
+  }
+  throw new Error(`Invalid Id
+  actual: ${JSON.stringify(value)}
+  expected: /^[0-9a-f]{32}$/ example: "445bf4f21ab920394c352dbdde962ea8"`);
+};
 
 /**
  * Id. 各種リソースを識別するために使うID. UUID(v4)やIPv6と同じ128bit, 16bytes.
@@ -65,13 +78,12 @@ export const createRandomToken = (): string => {
  *
  * @example
  * hashToken("5ab40791bfcd9e4288f7c725c35f6d99e7a564638f57c1cd845f858d79d6b300") // "9c5ad18ea698d0f3b9725b817effc7289163d53ae070ea4ec869aaf7430a2980"
- *
  */
 export const hashToken = async (token: string): Promise<string> => {
   return binaryToHexString(
     new Uint8Array(
-      await crypto.subtle.digest("SHA-256", new TextEncoder().encode(token))
-    )
+      await crypto.subtle.digest("SHA-256", new TextEncoder().encode(token)),
+    ),
   );
 };
 
