@@ -1,18 +1,14 @@
 import * as g from "npm:graphql";
 import { toDescriptionString } from "./annotation.ts";
 
-export type BrandId<TypeName extends string> = string & {
-  readonly __uniqueSymbol: unique symbol;
-  readonly __typeName: TypeName;
-};
-
 /**
  * UUID 形式の ID の GraphQL の Scalar 型を作る
  */
-export const createIdGraphQLScalarType = <TypeName extends string>(
-  name: TypeName,
-): g.GraphQLScalarType<BrandId<TypeName>, string> =>
-  new g.GraphQLScalarType<BrandId<TypeName>, string>({
+export const createIdGraphQLScalarType = <IdType extends string>(
+  name: string,
+  parseFn?: (value: unknown) => IdType,
+): g.GraphQLScalarType<IdType, string> =>
+  new g.GraphQLScalarType<IdType, string>({
     name,
     description: "UUID のハイフン無し文字列 " +
       toDescriptionString({ type: "uuid" }),
@@ -24,10 +20,10 @@ export const createIdGraphQLScalarType = <TypeName extends string>(
         `${name} is not string in GraphQL Scalar ${name} serialize`,
       );
     },
-    parseValue: parseId<BrandId<TypeName>>,
+    parseValue: parseFn ?? parseFnDefault,
     parseLiteral: (ast) => {
       if (ast.kind === g.Kind.STRING) {
-        return parseId<BrandId<TypeName>>(ast.value);
+        return (parseFn ?? parseFnDefault)(ast.value);
       }
       throw new Error(
         `${name} ast is not string in GraphQL Scalar ${name} parseLiteral`,
@@ -35,7 +31,7 @@ export const createIdGraphQLScalarType = <TypeName extends string>(
     },
   });
 
-const parseId = <const idType extends string>(value: unknown) => {
+const parseFnDefault = <const idType extends string>(value: unknown) => {
   if (typeof value === "string" && /^[0-9a-f]{32}$/u.test(value)) {
     return value as idType;
   }
