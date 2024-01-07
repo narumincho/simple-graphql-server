@@ -6,7 +6,6 @@ import { toDescriptionString } from "./annotation.ts";
  */
 export const createIdGraphQLScalarType = <IdType extends string>(
   name: string,
-  parseFn?: (value: unknown) => IdType,
 ): g.GraphQLScalarType<IdType, string> =>
   new g.GraphQLScalarType<IdType, string>({
     name,
@@ -20,10 +19,10 @@ export const createIdGraphQLScalarType = <IdType extends string>(
         `${name} is not string in GraphQL Scalar ${name} serialize`,
       );
     },
-    parseValue: parseFn ?? parseFnDefault,
+    parseValue: idFromString,
     parseLiteral: (ast) => {
       if (ast.kind === g.Kind.STRING) {
-        return (parseFn ?? parseFnDefault)(ast.value);
+        return idFromString(ast.value);
       }
       throw new Error(
         `${name} ast is not string in GraphQL Scalar ${name} parseLiteral`,
@@ -31,7 +30,9 @@ export const createIdGraphQLScalarType = <IdType extends string>(
     },
   });
 
-const parseFnDefault = <const idType extends string>(value: unknown) => {
+export const idFromString = <const idType extends string>(
+  value: unknown,
+): idType => {
   if (typeof value === "string" && /^[0-9a-f]{32}$/u.test(value)) {
     return value as idType;
   }
