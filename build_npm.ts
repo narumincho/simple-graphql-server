@@ -1,11 +1,11 @@
 import { build, emptyDir } from "https://deno.land/x/dnt@0.39.0/mod.ts";
-import { resolve } from "https://deno.land/std@0.209.0/path/mod.ts";
+import { resolve } from "https://deno.land/std@0.211.0/path/mod.ts";
 
 const npmOutDir = "./npm";
 
 await emptyDir(npmOutDir);
 
-const version = "0.1.0";
+const version = "0.1.1";
 
 Promise.all([
   build({

@@ -12,7 +12,7 @@ export const createRegexType = <IdType extends string>(
   },
 ): g.GraphQLScalarType<IdType, string> =>
   new g.GraphQLScalarType<IdType, string>({
-    name,
+    name: parameter.name,
     description: parameter.description +
       toDescriptionString({ type: "uuid" }),
     serialize: (value) => {
@@ -20,16 +20,17 @@ export const createRegexType = <IdType extends string>(
         return value;
       }
       throw new Error(
-        `${name} is not string in GraphQL Scalar ${name} serialize`,
+        `${parameter.name} is not string in GraphQL Scalar ${parameter.name} serialize`,
       );
     },
-    parseValue: (value) => regexFromString(name, value, parameter.regex),
+    parseValue: (value) =>
+      regexFromString(parameter.name, value, parameter.regex),
     parseLiteral: (ast) => {
       if (ast.kind === g.Kind.STRING) {
-        return regexFromString(name, ast.value, parameter.regex);
+        return regexFromString(parameter.name, ast.value, parameter.regex);
       }
       throw new Error(
-        `${name} ast is not string in GraphQL Scalar ${name} parseLiteral`,
+        `${parameter.name} ast is not string in GraphQL Scalar ${parameter.name} parseLiteral`,
       );
     },
   });
