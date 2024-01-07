@@ -32,7 +32,7 @@ export const normalizeOneLineString = (input: string): string => {
   return result;
 };
 
-export const nameFromString = <Name>(
+export const textFromString = <Name>(
   value: string,
   maxLength: number,
 ): Name => {
@@ -46,7 +46,7 @@ export const nameFromString = <Name>(
 /**
  * 自動的に前後の空白や改行を取り除くような処理をする1行の文字列の型を作成する
  */
-export const createNameGraphQLScalarType = <Name extends string>(
+export const createTextGraphQLScalarType = <Name extends string>(
   name: string,
   maxLength: number,
 ): g.GraphQLScalarType<Name, string> =>
@@ -72,11 +72,11 @@ export const createNameGraphQLScalarType = <Name extends string>(
           `${name} is not string in GraphQL Scalar ${name} parseValue`,
         );
       }
-      return nameFromString<Name>(value, maxLength);
+      return textFromString<Name>(value, maxLength);
     },
     parseLiteral: (ast) => {
       if (ast.kind === g.Kind.STRING) {
-        return nameFromString<Name>(ast.value, maxLength);
+        return textFromString<Name>(ast.value, maxLength);
       }
       throw new Error(
         `${name} ast is not string in GraphQL Scalar ${name} parseLiteral`,
