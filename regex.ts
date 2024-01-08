@@ -14,7 +14,10 @@ export const createRegexType = <IdType extends string>(
   new g.GraphQLScalarType<IdType, string>({
     name: parameter.name,
     description: parameter.description +
-      toDescriptionString({ type: "uuid" }),
+      toDescriptionString({
+        type: "regex",
+        pattern: parameter.regex.source,
+      }),
     serialize: (value) => {
       if (typeof value === "string") {
         return value;

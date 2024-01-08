@@ -88,7 +88,8 @@
           ]
         },
         "pattern": {
-          "type": "string"
+          "type": "string",
+          "description": "正規表現の文字列 JavaScriptの正規表現リテラルの開始と終了の / や フラグは含まない"
         }
       }
     }
