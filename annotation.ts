@@ -35,7 +35,7 @@ export type SimpleGraphQLAnnotation =
   }
   | { readonly type: "url" }
   | {
-    readonly type: "regex";
+    readonly type: "regexp";
     /**
      * 正規表現の文字列 JavaScriptの正規表現リテラルの開始と終了の / や フラグは含まない
      */

@@ -80,11 +80,11 @@
       "required": [
         "type"
       ],
-      "description": "regex. 正規表現のバリデーションを満たす文字列",
+      "description": "RegExp. 正規表現のバリデーションを満たす文字列",
       "properties": {
         "type": {
           "enum": [
-            "regex"
+            "regexp"
           ]
         },
         "pattern": {

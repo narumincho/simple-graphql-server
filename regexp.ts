@@ -4,10 +4,10 @@ import { toDescriptionString } from "./annotation.ts";
 /**
  * 指定した正規表現を満たす文字列の型を作成する
  */
-export const createRegexType = <IdType extends string>(
+export const createRegExpType = <IdType extends string>(
   parameter: {
     readonly name: string;
-    readonly regex: RegExp;
+    readonly regexp: RegExp;
     readonly description: string;
   },
 ): g.GraphQLScalarType<IdType, string> =>
@@ -15,8 +15,8 @@ export const createRegexType = <IdType extends string>(
     name: parameter.name,
     description: parameter.description +
       toDescriptionString({
-        type: "regex",
-        pattern: parameter.regex.source,
+        type: "regexp",
+        pattern: parameter.regexp.source,
       }),
     serialize: (value) => {
       if (typeof value === "string") {
@@ -27,10 +27,10 @@ export const createRegexType = <IdType extends string>(
       );
     },
     parseValue: (value) =>
-      regexFromString(parameter.name, value, parameter.regex),
+      regexpFromString(parameter.name, value, parameter.regexp),
     parseLiteral: (ast) => {
       if (ast.kind === g.Kind.STRING) {
-        return regexFromString(parameter.name, ast.value, parameter.regex);
+        return regexpFromString(parameter.name, ast.value, parameter.regexp);
       }
       throw new Error(
         `${parameter.name} ast is not string in GraphQL Scalar ${parameter.name} parseLiteral`,
@@ -38,15 +38,15 @@ export const createRegexType = <IdType extends string>(
     },
   });
 
-const regexFromString = <const idType extends string>(
+const regexpFromString = <const idType extends string>(
   typeName: string,
   value: unknown,
-  regex: RegExp,
+  regexp: RegExp,
 ): idType => {
-  if (typeof value === "string" && regex.test(value)) {
+  if (typeof value === "string" && regexp.test(value)) {
     return value as idType;
   }
   throw new Error(`Invalid ${typeName}
   actual: ${JSON.stringify(value)}
-  expected: ${regex}`);
+  expected: ${regexp}`);
 };
