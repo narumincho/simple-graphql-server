@@ -1,5 +1,8 @@
 {
-    "fmt": {
-        "include": ["**"]
-    }
+  "fmt": {
+    "include": ["**"]
+  },
+  "lint": {
+    "exclude": ["npm/**/*"]
+  }
 }
