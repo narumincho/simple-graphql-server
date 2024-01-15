@@ -24,34 +24,6 @@
       "required": [
         "type"
       ],
-      "description": "ファイルのハッシュ値である SHA256 や, AccountToken で使う\n\n内部的には `5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9` のような16進数の文字列の表現. 廃止予定",
-      "properties": {
-        "type": {
-          "enum": [
-            "token"
-          ]
-        }
-      }
-    },
-    {
-      "type": "object",
-      "required": [
-        "type"
-      ],
-      "description": "UUID. 16byteのバイナリ\n\n内部的には `445bf4f21ab920394c352dbdde962ea8` のような16進数のハイフン無し文字列表現. 廃止予定",
-      "properties": {
-        "type": {
-          "enum": [
-            "uuid"
-          ]
-        }
-      }
-    },
-    {
-      "type": "object",
-      "required": [
-        "type"
-      ],
       "description": "時刻を表現する. UNIX 元期からの経過ミリ秒数",
       "properties": {
         "type": {
