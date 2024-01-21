@@ -53,7 +53,7 @@ export const createTextGraphQLScalarType = <Name extends string>(
   new g.GraphQLScalarType<Name, string>({
     name,
     description:
-      "文字数制限(1...50)と空白の連続がないというを満たしている名前" +
+      `文字数制限(1...${maxLength})と空白の連続がないというを満たしている名前` +
       toDescriptionString({
         type: "text",
         maxLength,
