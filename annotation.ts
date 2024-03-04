@@ -26,9 +26,14 @@ export type SimpleGraphQLAnnotation =
     readonly pattern: string;
   };
 
+/**
+ * https://pub.dev/packages/simple_graphql_client_gen で解釈できるためのコメントを生成する
+ *
+ * 内部APIのため, 直接使うことはないはず
+ */
 export const toDescriptionString = (
   simpleGraphQLAnnotation: SimpleGraphQLAnnotation,
-) => {
+): string => {
   return (
     "\n\n### simpleGraphQLClientGenAnnotation\n```json\n" +
     JSON.stringify({

@@ -40,4 +40,5 @@ const dateTimeTypeConfig: g.GraphQLScalarTypeConfig<Date, number> = {
   parseLiteral: dateTimeTypeParseLiteral,
 };
 
-export const DateTime = new g.GraphQLScalarType(dateTimeTypeConfig);
+export const DateTime: g.GraphQLScalarType<Date, number> = new g
+  .GraphQLScalarType(dateTimeTypeConfig);

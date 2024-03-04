@@ -1,10 +1,12 @@
 import * as g from "npm:graphql";
 import { toDescriptionString } from "./annotation.ts";
 
-export const Url = new g.GraphQLScalarType<URL, string>({
+export const Url: g.GraphQLScalarType<URL, string> = new g.GraphQLScalarType<
+  URL,
+  string
+>({
   name: "Url",
-  description:
-    "URL 各言語の標準のURLとして扱う" +
+  description: "URL 各言語の標準のURLとして扱う" +
     toDescriptionString({
       type: "url",
     }),
