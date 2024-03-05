@@ -1,4 +1,4 @@
-import * as g from "npm:graphql";
+import * as g from "npm:graphql@16";
 import { toDescriptionString } from "./annotation.ts";
 
 export const Url: g.GraphQLScalarType<URL, string> = new g.GraphQLScalarType<

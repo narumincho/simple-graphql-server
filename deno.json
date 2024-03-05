@@ -2,10 +2,5 @@
   "name": "@narumincho/simple-graphql-server",
   "version": "1.0.0",
   "exports": "./mod.ts",
-  "fmt": {
-    "include": ["**"]
-  },
-  "lint": {
-    "exclude": ["npm/**/*"]
-  }
+  "lock": false
 }
